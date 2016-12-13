@@ -1,4 +1,4 @@
-[OSFont, OSFontSize] = getOSfont(OS, OSVersion)
+function [OSFont, OSFontSize] = getOSfont(OS, OSVersion)
 %GETOSFONT System user interface font (default system font).
 %   [OSFONT, OSFONTSIZE] = GETOSFONT(OS, OSVERSION) returns the name and
 %   size (in points) of the user interface (UI) font of operating system OS
@@ -160,7 +160,6 @@ else
 end
 
 end
-
 
 %% is font available on system?
 
