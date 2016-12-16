@@ -43,7 +43,7 @@ function [OSFont, OSFontSize] = getOSfont(OS, OSVersion)
 
 %% Input argument validation
 
-% input 1empty character array, or nonempty character vector
+% input 1: empty character array, or nonempty character vector
 assert(ischar(OS) && (isrow(OS) || isempty(OS)), 'getOSfont:IncorrectInputType',...
     'Input 1 must be an empty character array or a nonempty character vector.');
 % convert to all lowercase if necessary
@@ -73,14 +73,11 @@ switch OS
         if ((OSVersion(1) > 10) ||  ...
                 ((OSVersion(1) == 10) && (OSVersion(2) >= 11)))
             % OS X El Capitan, macOS Sierra and higher
-            font = 'San Francisco Text';
+            % San Francisco is not available, use Helvetica Neue
+            font = 'Helvetica Neue';
             fontSize = 13;
-            % if San Francisco is not available (the typical case), use Helvetica Neue
-            if ~fontexist(font)
-                font = 'Helvetica Neue';
-                warning('getOSfont:FontNotAvailable',...
-                    ['Font ''San Francisco Text'' not available; replaced by ''' font '''.']);
-            end
+            warning('getOSfont:FontNotAvailable',...
+                ['Font ''San Francisco Text'' not available; replaced by ''' font '''.']);
         elseif ((OSVersion(1) == 10) && (OSVersion(2) == 10))
             % OS X Yosemite
             font = 'Helvetica Neue';
