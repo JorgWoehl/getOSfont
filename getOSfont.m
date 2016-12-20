@@ -4,8 +4,8 @@ function [OSFont, OSFontSize] = getOSfont(OS, OSVersion)
 %   size (in points) of the user interface (UI) font of operating system OS
 %   in version OSVERSION. If the system UI font is not available to MATLAB,
 %   it is replaced by a similar font and a warning is issued. If the OS is
-%   not supported, or if the selected font is not available, OSFONT and
-%   OSFONTSIZE are returned empty.
+%   not supported, OSFONT and OSFONTSIZE are returned empty. OSFONT is also
+%   returned empty if the selected font is not available.
 %
 %   OS is a character vector containing the name of the operating system in
 %   lowercase letters. The following operating systems are supported:
@@ -29,9 +29,11 @@ function [OSFont, OSFontSize] = getOSfont(OS, OSVersion)
 %      OSVersion = [];
 %   end
 %   [OSFont, OSFontSize] = getOSfont(OS, OSVersion);
+%   % if returned empty, fall back on factory settings
 %   if isempty(OSFont)
-%      % default to factory settings
-%      OSFont     = get(groot, 'factoryUicontrolFontName');
+%      OSFont = get(groot, 'factoryUicontrolFontName');
+%   end
+%   if isempty(OSFontSize)
 %      OSFontSize = get(groot, 'factoryUicontrolFontSize');
 %   end
 %
@@ -40,6 +42,7 @@ function [OSFont, OSFontSize] = getOSfont(OS, OSVersion)
 % Created 2016-01-05 by Jorg C. Woehl
 % 2016-12-05 (JCW): Converted to standalone function, comments added.
 % 2016-12-08 (JCW): Input arguments added.
+% 2016-12-19 (JCW): Font and font size treated separately.
 
 %% Input argument validation
 
@@ -48,8 +51,10 @@ assert(ischar(OS) && (isrow(OS) || isempty(OS)), 'getOSfont:IncorrectInputType',
     'Input 1 must be an empty character array or a nonempty character vector.');
 % convert to all lowercase if necessary
 OS = lower(OS);
-
-if ~isempty(OS)
+if isempty(OS)
+    % reduce to simplest empty type
+    OS = '';
+else
     % input 2: (nonempty) numeric vector containing finite real non-negative "integers"
     assert(isnumeric(OSVersion) && isvector(OSVersion) && all(isfinite(OSVersion))...
         && isreal(OSVersion) && all(OSVersion == round(OSVersion)) && all(OSVersion >= 0),...
@@ -60,6 +65,7 @@ end
 %% Determine system UI font
 
 font = '';
+fontSize = [];
 
 % supported operating systems
 switch OS
@@ -147,23 +153,12 @@ switch OS
         end
 end
 
-% check if the selected font exists, otherwise return empty variables
+OSFontSize = fontSize;
+% check if the selected font exists
 if fontexist(font)
     OSFont = font;
-    OSFontSize = fontSize;
 else
     OSFont = '';
-    OSFontSize = [];
 end
-
-end
-
-%% is font available on system?
-
-function bool = fontexist(font)
-
-% find first occurrence of font in list of all fonts on the system
-idx = find(strcmpi(listfonts, font), 1);
-bool = ~isempty(idx);
 
 end

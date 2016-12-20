@@ -8,7 +8,7 @@ Graphical user interfaces developed with MATLAB often lack the look and feel of 
 
 ## Usage
 
-`[OSFont, OSFontSize] = getOSfont(OS, OSVersion)` returns the name and size (in points) of the system UI font of operating system `OS` in version `OSVersion`. If the system UI font is not available to MATLAB, it is replaced by a similar font and a warning is issued. If the OS is not supported, or if the selected font is not available, `OSFont` and `OSFontSize` are returned empty.
+`[OSFont, OSFontSize] = getOSfont(OS, OSVersion)` returns the name and size (in points) of the system UI font of operating system `OS` in version `OSVersion`. If the system UI font is not available to MATLAB, it is replaced by a similar font and a warning is issued. If the OS is not supported, `OSFONT` and `OSFONTSIZE` are returned empty. `OSFONT` is also returned empty if the selected font is not available.
 
 `OS` is a character vector containing the name of the operating system in lowercase letters. The following operating systems are supported:
 
@@ -32,9 +32,11 @@ catch
    OSVersion = [];
 end
 [OSFont, OSFontSize] = getOSfont(OS, OSVersion);
+% if returned empty, fall back on factory settings
 if isempty(OSFont)
-   % default to factory settings
-   OSFont     = get(groot, 'factoryUicontrolFontName');
+   OSFont = get(groot, 'factoryUicontrolFontName');
+end
+if isempty(OSFontSize)
    OSFontSize = get(groot, 'factoryUicontrolFontSize');
 end
 ```
