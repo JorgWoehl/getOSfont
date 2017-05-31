@@ -46,20 +46,20 @@ function [OSFont, OSFontSize] = getOSfont(OS, OSVersion)
 
 %% Input argument validation
 
-% input 1: empty character array, or nonempty character vector
+% input 1: empty character array, or character vector
 assert(ischar(OS) && (isrow(OS) || isempty(OS)), 'getOSfont:IncorrectInputType',...
-    'Input 1 must be an empty character array or a nonempty character vector.');
+    'Input 1 must be an empty character array or a character vector.');
 % convert to all lowercase if necessary
 OS = lower(OS);
 if isempty(OS)
     % reduce to simplest empty type
     OS = '';
 else
-    % input 2: (nonempty) numeric vector containing finite real non-negative "integers"
-    assert(isnumeric(OSVersion) && isvector(OSVersion) && all(isfinite(OSVersion))...
+    % input 2: nonempty numeric vector containing finite real non-negative "integers"
+    assert(isnumeric(OSVersion) && ~isempty(OSVersion) && isvector(OSVersion) && all(isfinite(OSVersion))...
         && isreal(OSVersion) && all(OSVersion == round(OSVersion)) && all(OSVersion >= 0),...
         'getOSfont:IncorrectInputType',...
-        'Input 2 must be a (nonempty) vector containing finite real non-negative integer values (of any numeric type).');
+        'Input 2 must be a nonempty vector containing finite real non-negative integer values (of any numeric type).');
 end
 
 %% Determine system UI font
