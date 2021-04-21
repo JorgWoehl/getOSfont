@@ -4,8 +4,9 @@ function [OSFont, OSFontSize] = getOSfont(OS, OSVersion)
 %   size (in points) of the user interface (UI) font of operating system OS
 %   in version OSVERSION. If the system UI font is not available to MATLAB,
 %   it is replaced by a similar font and a warning is issued. If the OS is
-%   not supported, OSFONT and OSFONTSIZE are returned empty. OSFONT is also
-%   returned empty if the selected font is not available.
+%   not supported, OSFONT and OSFONTSIZE are returned empty. If the font
+%   selected by GETOSFONT is not available on the system, OSFONT is
+%   returned empty.
 %
 %   OS is a character vector containing the name of the operating system in
 %   lowercase letters. The following operating systems are supported:
@@ -139,7 +140,7 @@ switch OS
         end
         if ((OSVersion(1) == 6) && (OSVersion(2) >= 8))
             % CentOS (Red Hat) 6.8 GNOME uses "Sans" (also called "Luxi Sans") 10pt,
-            % which is not available to Matlab (it lists "SansSerif" instead, which
+            % which is not available to MATLAB (it lists "SansSerif" instead, which
             % looks nothing like it). The following is a better match:
             font = 'DejaVu Sans Condensed';
             warning('getOSfont:FontNotAvailable',...
