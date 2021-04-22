@@ -6,7 +6,7 @@
 
 ## Purpose
 
-Graphical user interfaces developed with MATLAB often lack the look and feel of native applications, which is in part due to the fact that they do not use the user interface font of the operating system on which they are running. **getOSfont** resolves this issue by returning the name and size of the system UI font for a variety of platforms and OS versions, including all platforms officially supported by R2014b and later.
+Graphical user interfaces developed with MATLAB often lack the look and feel of native applications, which is in part due to the fact that they do not use the user interface font of the operating system on which they are running. **getOSfont** resolves this issue by returning the name and size of the system UI font for a variety of platforms and OS versions, including all platforms officially supported by R2014b and above.
 
 ## Usage
 
@@ -46,7 +46,7 @@ end
 
 ## Requirements
 
-**detectOS** and **getOSfont** run on MATLAB R2013a or later.
+**getOSfont** runs on MATLAB R2013a or above.
 
 ## Feedback
 
