@@ -46,7 +46,7 @@ end
 
 ## Requirements
 
-**getOSfont** runs on MATLAB R2013a or above.
+**getOSfont** is compatible with MATLAB R2013a and later releases.
 
 ## Feedback
 
