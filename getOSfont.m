@@ -45,7 +45,7 @@ function [OSFont, OSFontSize] = getOSfont(OS, OSVersion)
 % 2016-12-08 (JCW): Input arguments added.
 % 2016-12-19 (JCW): Font and font size treated separately.
 % 2021-04-22 (JCW): Version information added (v1.1.3).
-% 2024-03-26 (JCW): Confirmed font for macOS 14.4.1 and Windows 1
+% 2024-03-26 (JCW): Confirmed font for macOS 14.4.1 and Windows 11
 
 %% Input argument validation
 
